@@ -102,3 +102,9 @@ body {
   border: 0;
   border-radius: 10px;
 }
+.updateInput input{
+  background-color: transparent;
+  color: #000000;
+  margin-bottom: 0px;
+  padding: 0px;
+}
