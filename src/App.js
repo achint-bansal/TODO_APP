@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ export default class App extends Component {
     });
   }
 
-  itemList(input, e) {
+  addItem(input, e) {
     e.preventDefault();
     if (input) {
       let listArray = this.state.list;
@@ -29,6 +29,12 @@ export default class App extends Component {
         inputItem: "",
       });
     }
+  }
+
+  deleteItem(itemKey) {
+    const list = Object.assign([], this.state.list);
+    list.splice(itemKey, 1);
+    this.setState({ list: list });
   }
 
   render() {
@@ -44,17 +50,20 @@ export default class App extends Component {
             />
             <button
               type="submit"
-              onClick={(e) => this.itemList(this.state.inputItem, e)}
+              onClick={(e) => this.addItem(this.state.inputItem, e)}
             >
               Add
             </button>
           </form>
         </div>
         <ul>
-          {this.state.list.map((items, i) => (
+          {this.state.list.map((item, i) => (
             <li key={i}>
-              {items}
-              <FontAwesomeIcon icon={faTrashAlt} />
+              {item}
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                onClick={() => this.deleteItem(i)}
+              />
             </li>
           ))}
         </ul>
