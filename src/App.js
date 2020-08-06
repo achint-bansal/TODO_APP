@@ -23,7 +23,7 @@ export default class App extends Component {
         key: Date.now(),
       },
     });
-    console.log(this.state.item.key);
+    // console.log(this.state.item.key);
   }
 
   addItem(input, e) {
@@ -55,7 +55,7 @@ export default class App extends Component {
     const list = this.state.list;
     list.map((current) => {
       if (current.key === i) {
-        console.log(current.key);
+        // console.log(current.key);
         current.inputItem = updatedInput;
       }
     });
@@ -63,6 +63,22 @@ export default class App extends Component {
       list: list,
     });
   }
+  itemColorchange = (e) => {
+    if (e.type === "mouseenter") {
+      e.target.style.background = "#d9d9d9";
+    }
+    if (e.type === "mouseleave") {
+      e.target.style.background = "white";
+    }
+  };
+  itemColorchangeInput = (e) => {
+    if (e.type === "mouseenter") {
+      e.target.style.background = "transparent";
+    }
+    if (e.type === "mouseleave") {
+      e.target.style.background = "transparent";
+    }
+  };
 
   render() {
     return (
@@ -85,12 +101,18 @@ export default class App extends Component {
         </div>
         <ul className="updateInput">
           {this.state.list.map((item, i) => (
-            <li key={item.key}>
+            <li
+              key={item.key}
+              onMouseEnter={this.itemColorchange}
+              onMouseLeave={this.itemColorchange}
+            >
               {/* {item} */}
               <input
                 type="text"
                 value={item.inputItem}
                 onChange={(e) => this.updateItem(e.target.value, item.key)}
+                onMouseEnter={this.itemColorchangeInput}
+                onMouseLeave={this.itemColorchangeInput}
               />
               <FontAwesomeIcon
                 icon={faTrashAlt}
