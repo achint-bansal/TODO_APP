@@ -1,7 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashAlt,
+  faEdit,
+  faTick,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default class App extends Component {
   constructor(props) {
@@ -11,6 +16,7 @@ export default class App extends Component {
       item: {
         inputItem: "",
         key: "",
+        edit: "",
       },
       list: [],
     };
@@ -21,6 +27,7 @@ export default class App extends Component {
       item: {
         inputItem: input,
         key: Date.now(),
+        edit: false,
       },
     });
     // console.log(this.state.item.key);
@@ -39,12 +46,40 @@ export default class App extends Component {
           item: {
             inputItem: "",
             key: "",
+            edit: "",
           },
         });
       }
     }
   }
-
+  editItem(i) {
+    console.log(i);
+    const list = this.state.list;
+    list.map((current) => {
+      if (current.key === i) {
+        console.log("kk");
+        this.setState({
+          item: {
+            edit: true,
+          },
+        });
+      }
+    });
+  }
+  saveItem(i) {
+    console.log(i);
+    const list = this.state.list;
+    list.map((current) => {
+      if (current.key === i) {
+        console.log("kk");
+        this.setState({
+          item: {
+            edit: false,
+          },
+        });
+      }
+    });
+  }
   deleteItem(itemKey) {
     const list = Object.assign([], this.state.list);
     list.splice(itemKey, 1);
@@ -106,14 +141,31 @@ export default class App extends Component {
               onMouseEnter={this.itemColorchange}
               onMouseLeave={this.itemColorchange}
             >
-              {/* {item} */}
-              <input
-                type="text"
-                value={item.inputItem}
-                onChange={(e) => this.updateItem(e.target.value, item.key)}
-                onMouseEnter={this.itemColorchangeInput}
-                onMouseLeave={this.itemColorchangeInput}
-              />
+              {/* {item.inputItem} */}
+              {this.state.item.edit ? (
+                <Fragment>
+                  <input
+                    type="text"
+                    value={item.inputItem}
+                    onChange={(e) => this.updateItem(e.target.value, item.key)}
+                    onMouseEnter={this.itemColorchangeInput}
+                    onMouseLeave={this.itemColorchangeInput}
+                  />
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    onClick={() => this.saveItem(item.key)}
+                  />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <p>{item.inputItem}</p>
+
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    onClick={() => this.editItem(item.key)}
+                  />
+                </Fragment>
+              )}
               <FontAwesomeIcon
                 icon={faTrashAlt}
                 onClick={() => this.deleteItem(i)}
