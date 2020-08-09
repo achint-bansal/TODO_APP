@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashAlt,
   faEdit,
-  faTick,
-  faCheck,
+  faCheckSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default class App extends Component {
@@ -30,14 +29,11 @@ export default class App extends Component {
         edit: false,
       },
     });
-    // console.log(this.state.item.key);
   }
 
   addItem(input, e) {
     e.preventDefault();
     if (input) {
-      // let listArray = this.state.list;
-      // listArray.push(input);
       const newItem = this.state.item;
       if (newItem.text !== "") {
         const list = [...this.state.list, newItem];
@@ -86,11 +82,9 @@ export default class App extends Component {
     this.setState({ list: list });
   }
   updateItem(updatedInput, i) {
-    // console.log("key is "+i);
     const list = this.state.list;
     list.map((current) => {
       if (current.key === i) {
-        // console.log(current.key);
         current.inputItem = updatedInput;
       }
     });
@@ -98,22 +92,28 @@ export default class App extends Component {
       list: list,
     });
   }
-  itemColorchange = (e) => {
-    if (e.type === "mouseenter") {
-      e.target.style.background = "#d9d9d9";
-    }
-    if (e.type === "mouseleave") {
-      e.target.style.background = "white";
-    }
-  };
-  itemColorchangeInput = (e) => {
-    if (e.type === "mouseenter") {
-      e.target.style.background = "transparent";
-    }
-    if (e.type === "mouseleave") {
-      e.target.style.background = "transparent";
-    }
-  };
+  alternateColor(i) {
+    if (i % 2 === 0) return "#d9d9d9";
+    else return "white";
+  }
+  // itemColorchange = (e,i) => {
+  //   if (e.type === "mouseenter") {
+  //     e.target.style.background = "#d9d9d9";
+  //   }
+  //   if (e.type === "mouseleave") {
+  //     // e.target.style.background = "white";
+  //     // this.alternateColor(i);
+
+  //   }
+  // };
+  // itemColorchangeInput = (e) => {
+  //   if (e.type === "mouseenter") {
+  //     e.target.style.background = "transparent";
+  //   }
+  //   if (e.type === "mouseleave") {
+  //     e.target.style.background = "transparent";
+  //   }
+  // };
 
   render() {
     return (
@@ -140,8 +140,8 @@ export default class App extends Component {
               key={item.key}
               onMouseEnter={this.itemColorchange}
               onMouseLeave={this.itemColorchange}
+              style={{ backgroundColor: this.alternateColor(i) }}
             >
-              {/* {item.inputItem} */}
               {this.state.item.edit ? (
                 <Fragment>
                   <input
@@ -152,7 +152,7 @@ export default class App extends Component {
                     onMouseLeave={this.itemColorchangeInput}
                   />
                   <FontAwesomeIcon
-                    icon={faCheck}
+                    icon={faCheckSquare}
                     onClick={() => this.saveItem(item.key)}
                   />
                 </Fragment>
