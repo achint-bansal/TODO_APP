@@ -17,6 +17,7 @@ export default class App extends Component {
         key: "",
         edit: "",
         completion: "",
+        listOptions: "",
       },
       list: [],
     };
@@ -29,6 +30,7 @@ export default class App extends Component {
         key: Date.now(),
         edit: false,
         completion: false,
+        listOptions: false,
       },
     });
   }
@@ -46,6 +48,7 @@ export default class App extends Component {
             key: "",
             edit: "",
             completion: "",
+            listOptions: "",
           },
         });
       }
@@ -100,7 +103,7 @@ export default class App extends Component {
   //     e.target.style.background = "transparent";
   //   }
   // };
-  markTask(e, i, item) {
+  markTaskComplete(e, i, item) {
     const list = this.state.list;
     list.map((current) => {
       if (current.key === i) {
@@ -116,6 +119,28 @@ export default class App extends Component {
           ? (e.target.style.color = "green")
           : (e.target.style.color = "black");
       }
+    });
+  }
+  showListOptions(e, inputKey) {
+    const list = this.state.list;
+    list.map((current) => {
+      if (current.key === inputKey) {
+        current.listOptions = true;
+      }
+    });
+    this.setState({
+      list: list,
+    });
+  }
+  hideListOptions(e, inputKey) {
+    const list = this.state.list;
+    list.map((current) => {
+      if (current.key === inputKey) {
+        current.listOptions = false;
+      }
+    });
+    this.setState({
+      list: list,
     });
   }
   render() {
@@ -141,8 +166,10 @@ export default class App extends Component {
           {this.state.list.map((item, i) => (
             <li
               key={item.key}
-              onMouseEnter={this.itemColorchange}
-              onMouseLeave={this.itemColorchange}
+              // onMouseEnter={this.itemColorchange}
+              // onMouseLeave={this.itemColorchange}
+              onMouseEnter={(e) => this.showListOptions(e, item.key)}
+              onMouseLeave={(e) => this.hideListOptions(e, item.key)}
               style={{ backgroundColor: this.alternateColor(i) }}
             >
               {item.edit ? (
@@ -162,21 +189,27 @@ export default class App extends Component {
               ) : (
                 <Fragment>
                   <p>{item.inputItem}</p>
+                  <p
+                    className="complete"
+                    onClick={(e) => this.markTaskComplete(e, item.key, item)}
+                  >
+                    <b>{item.completion ? "COMPLETED" : "COMPLETE"}</b>
+                  </p>
                   <div className="listOptions">
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      onClick={() => this.editItem(item.key)}
-                    />
-                    <p
-                      className="complete"
-                      onClick={(e) => this.markTask(e, item.key, item)}
-                    >
-                      <b>COMPLETE</b>
-                    </p>
-                    <FontAwesomeIcon
-                      icon={faTrashAlt}
-                      onClick={() => this.deleteItem(i)}
-                    />
+                    {item.listOptions ? (
+                      <p className="listOptions-icons">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          onClick={() => this.editItem(item.key)}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrashAlt}
+                          onClick={() => this.deleteItem(i)}
+                        />{" "}
+                      </p>
+                    ) : (
+                      <p className="null"></p>
+                    )}
                   </div>
                 </Fragment>
               )}

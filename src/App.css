@@ -112,8 +112,19 @@ body {
   cursor: pointer;
   border: 1px solid black;
   border-radius: 10px;
-  margin: 0px 10px;
+  margin: 0px 10px ;
+  float: right;
+  padding: 5px;
+  font-size: 15px;
 }
 .listOptions{
   display: flex;
+}
+.listOptions-icons{
+  margin: 0px;
+  padding: 0px;
+  float: left;
+}
+.null{
+  margin: 0 0 23px;
 }
