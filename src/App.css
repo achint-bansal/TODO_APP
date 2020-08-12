@@ -4,6 +4,9 @@
 body {
   background-color: #ffffff;
 }
+.darktheme{
+  background-color: gray;
+}
 .squares {
   z-index: -2;
 }
@@ -33,6 +36,16 @@ body {
 }
 .bottom-right-square >div{
   width: 300px;
+}
+#themeChange{
+  position: fixed;
+  right: 20px;
+  top: 20px;
+}
+.sun , .moon{
+  font-size: 60px;
+  background-color: transparent;
+  cursor: pointer;
 }
 .upper-right-square{
   position: fixed;
