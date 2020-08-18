@@ -1,6 +1,6 @@
 ### A TODO Web App using REACT.JS
 
-## [Check it here](achint-bansal.github.io/todo_app/)
+## [Check it here](https://achint-bansal.github.io/TODO_APP/)
 
 ## FEATURES
 
